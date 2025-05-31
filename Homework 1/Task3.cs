@@ -1,75 +1,74 @@
-﻿namespace ConsoleApp2;
+namespace ConsoleApp2;
 using System;
 using System.Diagnostics;
 
 class Task3
 {
-    public void Main(string[] args)
+    public void Run(string[] args)
     {
         if (args.Length == 0)
         {
-            Console.Write("Введите первое число: ");
-            string num1 = Console.ReadLine();
+            Console.Write("First number: ");
+            string input1 = Console.ReadLine();
 
-            Console.Write("Введите второе число: ");
-            string num2 = Console.ReadLine();
+            Console.Write("Second number: ");
+            string input2 = Console.ReadLine();
 
-            Console.Write("Введите операцию (+, -, *, /): ");
-            string operation = Console.ReadLine();
+            Console.Write("Operation (+, -, *, /): ");
+            string op = Console.ReadLine();
 
-            var startInfo = new ProcessStartInfo
+            var info = new ProcessStartInfo
             {
                 FileName = Process.GetCurrentProcess().MainModule.FileName,
-                Arguments = $"{num1} {num2} {operation}",
+                Arguments = $"{input1} {input2} {op}",
                 UseShellExecute = false
             };
 
-            Process.Start(startInfo);
+            Process.Start(info);
         }
         else
         {
             if (args.Length != 3)
             {
-                Console.WriteLine("Ожидается 3 аргумента: число1 число2 операция");
+                Console.WriteLine("Expected 3 arguments: num1 num2 operation");
                 return;
             }
 
-            if (!int.TryParse(args[0], out int a) || !int.TryParse(args[1], out int b))
+            if (!int.TryParse(args[0], out int x) || !int.TryParse(args[1], out int y))
             {
-                Console.WriteLine("Ошибка: аргументы должны быть числами.");
+                Console.WriteLine("Error: arguments must be numbers.");
                 return;
             }
 
             string op = args[2];
-            int result = 0;
-            bool valid = true;
+            int res = 0;
+            bool ok = true;
 
             switch (op)
             {
-                case "+": result = a + b; break;
-                case "-": result = a - b; break;
-                case "*": result = a * b; break;
+                case "+": res = x + y; break;
+                case "-": res = x - y; break;
+                case "*": res = x * y; break;
                 case "/":
-                    if (b == 0)
+                    if (y == 0)
                     {
-                        Console.WriteLine("Ошибка: деление на ноль.");
-                        valid = false;
+                        Console.WriteLine("Error: division by zero.");
+                        ok = false;
                     }
                     else
                     {
-                        result = a / b;
+                        res = x / y;
                     }
                     break;
                 default:
-                    Console.WriteLine("Неизвестная операция.");
-                    valid = false;
+                    Console.WriteLine("Unknown operation.");
+                    ok = false;
                     break;
             }
 
-            if (valid)
+            if (ok)
             {
-                Console.WriteLine($"Аргументы: {a} {op} {b}");
-                Console.WriteLine($"Результат: {result}");
+                Console.WriteLine($"{x} {op} {y} = {res}");
             }
         }
     }
