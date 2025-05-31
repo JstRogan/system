@@ -1,12 +1,12 @@
-﻿namespace ConsoleApp2;
+namespace ConsoleApp2;
 using System;
 using System.Diagnostics;
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        var Task_2 = new Task_2();
-        Task_2.Run();
+        Task2 task = new Task2();
+        task.Run();
     }
 }
