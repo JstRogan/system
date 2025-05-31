@@ -1,60 +1,59 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 
 namespace ConsoleApp2;
 
-public class Task_2
+public class Task2
 {
     public void Run()
     {
-        string exeName = "notepad.exe";
+        string fileName = "notepad.exe";
 
-        try 
-        { 
-            Process process = new Process(); 
-            process.StartInfo.FileName = exeName;
-            
-            process.Start(); 
-            Console.WriteLine($"Процесс {exeName} запущен с ID: {process.Id}");
-            
-            Console.WriteLine("Выберите действие:"); 
-            Console.WriteLine("1 - Ожидать завершения процесса"); 
-            Console.WriteLine("2 - Принудительно завершить процесс"); 
-            Console.Write("Ваш выбор: ");
-            
-            int choice = int.Parse(Console.ReadLine()!);
+        try
+        {
+            Process proc = new Process();
+            proc.StartInfo.FileName = fileName;
+            proc.Start();
 
-            if (choice == 1) 
-            { 
-                Console.WriteLine("Ожидание завершения процесса..."); 
-                process.WaitForExit(); 
-                Console.WriteLine($"Процесс завершен. Код выхода: {process.ExitCode}");
+            Console.WriteLine($"Started {fileName}, PID: {proc.Id}");
+            Console.WriteLine("Choose an option:");
+            Console.WriteLine("1 - Wait for process to exit");
+            Console.WriteLine("2 - Force kill the process");
+            Console.Write("Your choice: ");
+
+            int input = int.Parse(Console.ReadLine()!);
+
+            if (input == 1)
+            {
+                Console.WriteLine("Waiting for process to finish...");
+                proc.WaitForExit();
+                Console.WriteLine($"Process exited with code: {proc.ExitCode}");
             }
-            
-            else if (choice == 2) 
-            { 
-                Console.WriteLine("Процесс будет завершён принудительно через 2 секунды..."); 
+            else if (input == 2)
+            {
+                Console.WriteLine("Will force stop the process in 2 seconds...");
                 Thread.Sleep(2000);
-                if (!process.HasExited) 
-                { 
-                    process.Kill();
-                    Console.WriteLine("Процесс принудительно завершён.");
+
+                if (!proc.HasExited)
+                {
+                    proc.Kill();
+                    Console.WriteLine("Process was forcefully stopped.");
                 }
-                else 
-                { 
-                    Console.WriteLine("Процесс уже завершён самостоятельно.");
+                else
+                {
+                    Console.WriteLine("Process already finished by itself.");
                 }
             }
-            else 
-            { 
-                Console.WriteLine("Неверный выбор.");
+            else
+            {
+                Console.WriteLine("Invalid option.");
             }
         }
-        catch (Exception ex) 
-        { 
-            Console.WriteLine($"Ошибка: {ex.Message}");
+        catch (Exception e)
+        {
+            Console.WriteLine("Error: " + e.Message);
         }
-        
-        Console.WriteLine("Нажмите любую клавишу для выхода..."); 
+
+        Console.WriteLine("Press any key to exit...");
         Console.ReadKey();
     }
 }
