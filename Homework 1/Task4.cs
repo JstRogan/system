@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp2;
+namespace ConsoleApp2;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -6,52 +6,52 @@ using System.Text.RegularExpressions;
 
 class Task4
 {
-    public void Main(string[] args)
+    public void Run(string[] args)
     {
         if (args.Length == 0)
         {
-            Console.Write("Введите путь к файлу: ");
-            string filePath = Console.ReadLine();
+            Console.Write("File path: ");
+            string path = Console.ReadLine();
 
-            Console.Write("Введите слово для поиска: ");
-            string searchWord = Console.ReadLine();
+            Console.Write("Word to search: ");
+            string word = Console.ReadLine();
 
-            if (!File.Exists(filePath))
+            if (!File.Exists(path))
             {
-                Console.WriteLine("Файл не найден.");
+                Console.WriteLine("File not found.");
                 return;
             }
-            
-            var startInfo = new ProcessStartInfo
+
+            var info = new ProcessStartInfo
             {
                 FileName = Process.GetCurrentProcess().MainModule.FileName,
-                Arguments = $"\"{filePath}\" {searchWord}",
+                Arguments = $"\"{path}\" {word}",
                 UseShellExecute = false
             };
 
-            Process.Start(startInfo);
+            Process.Start(info);
         }
         else
         {
             if (args.Length != 2)
             {
-                Console.WriteLine("Ожидается 2 аргумента: путь_к_файлу и слово.");
+                Console.WriteLine("Need 2 args: file_path and word.");
                 return;
             }
 
-            string filePath = args[0];
+            string path = args[0];
             string word = args[1];
 
-            if (!File.Exists(filePath))
+            if (!File.Exists(path))
             {
-                Console.WriteLine("Файл не найден.");
+                Console.WriteLine("File not found.");
                 return;
             }
 
-            string content = File.ReadAllText(filePath);
-            int count = Regex.Matches(content, $@"\b{Regex.Escape(word)}\b", RegexOptions.IgnoreCase).Count;
+            string text = File.ReadAllText(path);
+            int found = Regex.Matches(text, $@"\b{Regex.Escape(word)}\b", RegexOptions.IgnoreCase).Count;
 
-            Console.WriteLine($"Слово \"{word}\" встречается {count} раз(а) в файле.");
+            Console.WriteLine($"Word \"{word}\" found {found} times.");
         }
     }
 }
