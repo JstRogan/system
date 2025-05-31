@@ -1,42 +1,37 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 
 namespace ConsoleApp2;
 
-public class Task_1
+public class Task1
 {
     public void Run()
     {
         try
         {
-            string exeName = "notepad.exe";
-            
-            Process process = new Process();
-            process.StartInfo.FileName = exeName;
+            string fileName = "notepad.exe";
+            Process p = new Process();
+            p.StartInfo.FileName = fileName;
 
-            process.Start();
-            Console.WriteLine($"Процесс {exeName} запущен. Ожидание завершения...");
+            p.Start();
+            Console.WriteLine($"Started process: {fileName}");
 
-            process.WaitForExit();
+            p.WaitForExit();
 
-            bool exitCode = process.HasExited;
-            
-            if (exitCode)
+            if (p.HasExited)
             {
-                Console.WriteLine("Процесс завершен");
+                Console.WriteLine("Process finished.");
             }
-            
             else
             {
-                Console.WriteLine("Процесс продолжает работать...");
+                Console.WriteLine("Process is still running.");
             }
-            
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Console.WriteLine($"Ошибка при запуске процесса: {ex.Message}");
+            Console.WriteLine("Error: " + e.Message);
         }
 
-        Console.WriteLine("Нажмите любую клавишу для выхода...");
+        Console.WriteLine("Press any key to exit...");
         Console.ReadKey();
     }
 }
