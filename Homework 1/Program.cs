@@ -1,12 +1,11 @@
 namespace ConsoleApp2;
 using System;
-using System.Diagnostics;
 
 class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
-        Task2 task = new Task2();
-        task.Run();
+        Task3 task = new Task3();
+        task.Run(args);
     }
 }
